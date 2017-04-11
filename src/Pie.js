@@ -73,9 +73,10 @@ export default class PieChart extends Component {
     let R = this.props.R
     R = (R || (this.props.options && this.props.options.R))
     R = (R || radius)
+    let center = this.props.center || (this.props.options && this.props.options.center) || [0,0];
 
     let chart = Pie({
-      center: this.props.center || (this.props.options && this.props.options.center) || [0,0] ,
+      center,
       r,
       R,
       data: this.props.data,
@@ -93,8 +94,8 @@ export default class PieChart extends Component {
       let stroke = typeof fill === 'string' ? outerFill : Colors.darkenColor(outerFill)
       slices = (
         <G>
-          <Circle r={R} cx={x} cy={y} stroke={stroke} fill={outerFill}/>
-          <Circle r={r} cx={x} cy={y} stroke={stroke} fill={innerFill}/>
+          <Circle r={R} cx={center ? center[0] : x} cy={center ? center[1] : y} stroke={stroke} fill={outerFill}/>
+          <Circle r={r} cx={center ? center[0] : x} cy={center ? center[1] : y} stroke={stroke} fill={innerFill}/>
           <Text fontFamily={textStyle.fontFamily}
                 fontSize={textStyle.fontSize}
                 fontWeight={textStyle.fontWeight}
